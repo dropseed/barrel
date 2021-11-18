@@ -1,6 +1,6 @@
 [tool.poetry]
-name = "barrel"
-version = "0.0.0"
+name = "barrel1"
+version = "0.1.0"
 description = ""
 authors = ["Dropseed <python@dropseed.dev>"]
 license = "MIT"
@@ -8,6 +8,9 @@ readme = "README.md"
 homepage = "https://github.com/dropseed/barrel"
 documentation = "https://github.com/dropseed/barrel"
 repository = "https://github.com/dropseed/barrel"
+packages = [
+    { include = "barrel" },
+]
 # keywords = ["static", "site", "generator", "jinja"]
 
 [tool.poetry.dependencies]
