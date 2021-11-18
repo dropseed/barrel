@@ -170,7 +170,7 @@ class Installer:
             raise Abort()
 
     def check_gitignore(self):
-        if os.path.exists(".git") and not self.gitignore_contains(self.VENV_NAME):
+        if os.path.exists(".git") and not self.gitignore_contains(self.VENV_NAME) and not self.gitignore_contains("/" + self.VENV_NAME):
             self.warn(
                 f"- You should add {self.VENV_NAME} to your .gitignore so that it is not tracked by git"
             )
