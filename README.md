@@ -18,7 +18,7 @@ while being wrapped in a user-friendly DX for people unfamiliar with Python.
 
 Barrel roughly works like this:
 
-- an initial install script through curl/Python
+- an initial install script through curl/Python (`curl -sSL https://raw.githubusercontent.com/dropseed/barrel/master/barrel/install.py | python3 - <package_name>` for now)
   - creates `.venv`
   - saves `requirements.txt`
 - a self-updating process that can be included directly in your app
