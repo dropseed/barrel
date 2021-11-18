@@ -1,1 +1,1 @@
-from .core import update, uninstall  # NOQA
+from .core import update  # NOQA

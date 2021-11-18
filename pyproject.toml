@@ -13,6 +13,10 @@ repository = "https://github.com/dropseed/barrel"
 [tool.poetry.dependencies]
 python = "^3.6.2"
 
+[tool.poetry.dev-dependencies]
+black = "^21.11b1"
+mypy = "^0.910"
+
 [build-system]
 requires = ["poetry>=0.12"]
 build-backend = "poetry.masonry.api"

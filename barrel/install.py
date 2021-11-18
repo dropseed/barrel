@@ -19,7 +19,7 @@ class Installer:
     VENV_NAME = ".venv"
     REQUIREMENTS_FILE = "requirements.txt"
 
-    def __init__(self, package, entrypoint_name=None, debug=False):
+    def __init__(self, package: str, entrypoint_name: str = "", debug: bool = False):
         self.package_input = package
         self.debug = debug
         self.package_name, self.package_constraint = self.parse_package_input(
@@ -27,7 +27,7 @@ class Installer:
         )
         self.entrypoint_name = entrypoint_name or self.package_name
 
-    def parse_package_input(self, package_input):
+    def parse_package_input(self, package_input: str):
         package_parts = re.split(r"(?<!\\)[><~^=]", package_input)
         if len(package_parts) == 1:
             package_name = package_parts[0]
@@ -42,7 +42,7 @@ class Installer:
 
         return package_name, package_constraint
 
-    def install(self, reinstall=False):
+    def install(self, reinstall: bool = False):
         self.event(f"Installing {self.package_input} into this directory")
 
         if not self.in_venv() and self.has_existing():
@@ -120,7 +120,7 @@ class Installer:
             stdout=sys.stdout if self.debug else subprocess.DEVNULL,
         )
 
-    def save_requirements(self, package_installed):
+    def save_requirements(self, package_installed: str):
         self.event(f"- Saving {self.REQUIREMENTS_FILE}")
         with open(self.REQUIREMENTS_FILE, "w+") as f:
             f.write(f"# This file is managed automatically by {self.package_name}\n")
@@ -142,7 +142,7 @@ class Installer:
                 f"- You should add {self.VENV_NAME} to your .gitignore so that it is not tracked by git"
             )
 
-    def gitignore_contains(self, text):
+    def gitignore_contains(self, text: str):
         if not os.path.exists(".gitignore"):
             return False
 
@@ -162,23 +162,23 @@ class Installer:
             if re.match(r"^{}\W+".format(self.package_name), line.lower()):
                 return line
 
-    def confirm(self, prompt):
+    def confirm(self, prompt: str):
         return "y" in input(prompt).lower()
 
-    def event(self, text):
+    def event(self, text: str):
         """Print in bold if we're in deubg (so regular output is distinguished)"""
         if self.debug:
             print("\033[1m" + text + "\033[0m")
         else:
             print(text)
 
-    def warn(self, text):
+    def warn(self, text: str):
         print("\033[33m" + text + "\033[0m")
 
-    def error(self, text):
+    def error(self, text: str):
         print("\033[31m" + text + "\033[0m")
 
-    def success(self, text):
+    def success(self, text: str):
         print("\033[32m" + text + "\033[0m")
 
 
@@ -208,7 +208,7 @@ if __name__ == "__main__":
         sys.argv.remove("--entrypoint")
         sys.argv.remove(entrypoint_name)
     else:
-        entrypoint_name = None
+        entrypoint_name = ""
 
     package = sys.argv[1]
 
