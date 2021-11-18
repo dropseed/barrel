@@ -43,6 +43,8 @@ class Installer:
         return package_name, package_constraint
 
     def install(self, reinstall: bool = False):
+        self.check_compatibility(reinstalling=reinstall)
+
         self.event(f"Installing {self.package_input} into this directory")
 
         if not self.in_venv() and self.has_existing():
@@ -68,6 +70,37 @@ class Installer:
         self.check_gitignore()
 
         self.success(f"\nSuccessfully installed {package_installed}!")
+
+    def check_compatibility(self, reinstalling):
+        if os.path.exists("pyproject.toml") or os.path.exists("poetry.lock"):
+            print(
+                "It looks like you are using Poetry for dependencies. Use the `poetry update` command instead."
+            )
+            raise Abort()
+
+        if os.path.exists("Pipfile") or os.path.exists("Pipfile.lock"):
+            print(
+                "It looks like you are using Pipenv for dependencies. Use the `pipenv update` command instead."
+            )
+            raise Abort()
+
+        if os.path.exists("requirements.in"):
+            print(
+                "It looks like you are using pip-compile for dependencies. Use the `pip-compile requirements.in` command instead."
+            )
+            raise Abort()
+
+        if os.path.exists("setup.py"):
+            print(
+                "It looks like you are using setuptools for dependencies. Use the `python setup.py install` command instead."
+            )
+            raise Abort()
+
+        if reinstalling and not os.path.exists(Installer.REQUIREMENTS_FILE):
+            print(
+                f"A {Installer.REQUIREMENTS_FILE} file does not exist, which likely means that you aren't updating a barrel-compatible installation or aren't in the right directory."
+            )
+            raise Abort()
 
     def in_venv(self):
         return sys.executable.startswith(os.path.abspath(self.VENV_NAME) + os.sep)
