@@ -1,3 +1,8 @@
 #!/bin/sh -e
 ./scripts/format --check
 ./scripts/test
+
+echo "Making sure site install.py is latest (currently latest on master, not latest from release)"
+if ! diff barrel/install.py site/content/install.py; then
+    echo "Do 'cp barrel/install.py site/content/install.py' to update"
+fi
