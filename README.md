@@ -52,7 +52,7 @@ A curl -> Python command is the easiest way to do this,
 that doesn't require *any* additional dependencies besides Python 3.
 
 ```console
-$ curl -sSL https://barrel.dropseed.dev/install.py | python3 - <pypi_package_name>
+$ curl -sSL https://barrel.dev/install.py | python3 - <pypi_package_name>
 ```
 
 This will create a virtual environment at `.venv` and `requirements.txt` file.
@@ -84,12 +84,12 @@ To use Barrel for the installation process,
 you just need a published package that is your CLI.
 
 You can copy [install.py](https://github.com/dropseed/barrel/blob/master/barrel/install.py) to your own repo or site,
-but the we always keep an up-to-date hosted version at https://barrel.dropseed.dev/install.py.
+but the we always keep an up-to-date hosted version at https://barrel.dev/install.py.
 
 Your documentation should tell users how to use the curl command (include your package name as the argument!).
 
 ```console
-$ curl -sSL https://barrel.dropseed.dev/install.py | python3 - <pypi_package_name>
+$ curl -sSL https://barrel.dev/install.py | python3 - <pypi_package_name>
 ```
 
 You *should* add "barrel1" (final name TBD) as a dependency in your package and provide a self-updating experience.
@@ -110,7 +110,7 @@ If you don't add "barrel1" (final name TBD) as a dependency,
 then you'll need to tell users to run the curl command again to update with the `--reinstall` option.
 
 ```console
-$ curl -sSL https://barrel.dropseed.dev/install.py | python3 - <pypi_package_name> --reinstall
+$ curl -sSL https://barrel.dev/install.py | python3 - <pypi_package_name> --reinstall
 ```
 
 Things to know:
