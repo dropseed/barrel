@@ -183,4 +183,24 @@ and the update step as simple as `<package> update`.
 
 ### pipx
 
+On the surface, [pipx](https://github.com/pypa/pipx/) is pretty similar in goals.
+The difference is that pipx is aimed at tools that are installed *globally* on a user's machine.
+This is not exactly what you want if your package needs to be versioned to a specific user's repo.
+
+If you try to use a globally installed command across multiple repos,
+you run into problems when a new version of the command is released and new features are added/removed that aren't compatible with *all* of your repos (build command changed syntax, YAML config settings changed, etc.).
+The only solution you have is to update all of them at once,
+which can be a pretty unpleasant experience depending on the changes required.
+
 ### poetry, pipenv, etc.
+
+In a lot of ways, Barrel is intended to be a simpler alternative to these.
+Both [Poetry](https://github.com/python-poetry/poetry) and [Pipenv](https://github.com/pypa/pipenv) can be used for installing a specific version of a Python package into a repo.
+But they come with a lot of other baggage that you simply don't need for a single-dependency repo.
+
+Both require you to install the tool itself first (which is a process of its own),
+and can force other decisions like locking to a specific Python version,
+new commands to learn,
+and extra headaches if poetry/pipenv themselves break!
+Which does happen (surprisinglyg frequently in the case of Pipenv) and can require a lot of difficult troubleshooting.
+Barrel largely avoids this by doing basic `pip` commands and `requirements.txt` flows that are unlikely to have any problems.
