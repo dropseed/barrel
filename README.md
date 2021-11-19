@@ -17,9 +17,9 @@ but your users shouldn't have to be Python experts to use them.
 For tools that are *globally* installed,
 people tend to do things like `pip install --user <package>`,
 [write a custom installation script](https://github.com/python-poetry/poetry/blob/cbbd92ceb5938a43a1f4666cdaf9599c74650442/get-poetry.py),
-or install and use wrapper like [pipx](https://github.com/pypa/pipx/).
+or install and use a wrapper like [pipx](https://github.com/pypa/pipx/).
 
-This works when you intend to use the same version of the tools no matter what you're working on.
+This works when you intend to use the same version of the CLI no matter what you're working on.
 But there are other things like static site generators and automation tools that should be installed specifically into a user's *repository*.
 The version installed needs to be isolated and pinned,
 so you can use the same tools on multiple repos/projects without worrying about update conflicts and forcing them all to use the same version.
@@ -33,14 +33,13 @@ but the user doesn't actually use Python when interacting with it.
 
 Barrel is an installation script,
 embeddable package,
-and convention for installing a versioned,
-isolated command line tool into a repo.
+and set of conventions for installing an isolated and versioned command line tool into a repo.
+As a bonus, Barrel makes it easy for you to have a self-updating CLI.
 
 The goal is to *simplify* the process (especially for non-Pythonistas) and provide a developer experience that doesn't suck.
+It does this by being a lightweight wrapper around standard, known conventions that can be used as a "one-liner".
 
-It's a lightweight wrapper around standard, known conventions that can be used as a "one-liner".
-
-Using well-known conventions like `requirements.txt` allows standard CI/CD workflows and other services/tools to "just work",
+Using well-known conventions like `requirements.txt` also allows standard CI/CD workflows and other services/tools to "just work",
 without knowing or caring about Barrel itself.
 This makes it automatically compatible with hosting services like Netlify,
 and dependency management automation like Dependabot.
@@ -49,7 +48,7 @@ and dependency management automation like Dependabot.
 
 The initial install of a command line tools is done with a script.
 A curl -> Python command is the easiest way to do this,
-that doesn't require *any* additional dependencies besides Python 3.
+and doesn't require *any* additional dependencies besides Python 3 (which your CLI requires anyway).
 
 ```console
 $ curl -sSL https://barrel.dev/install.py | python3 - <pypi_package_name>
@@ -57,13 +56,13 @@ $ curl -sSL https://barrel.dev/install.py | python3 - <pypi_package_name>
 
 This will create a virtual environment at `.venv` and `requirements.txt` file.
 The `.venv` should be in `.gitignore` but the `requirements.txt` should be committed.
-The install script will help point out these details.
+The install script will help point out these details for people that aren't familiar with them.
 
-The `requirements.txt` file will look something like this and effectively "pins" the version in use until an update is made:
+The `requirements.txt` file will look something like this and effectively ["pins"](https://www.python.org/dev/peps/pep-0440/#version-matching) the version in use until an update is made:
 
 ```txt
-# This file is managed automatically by combine
-combine==2.3.0
+# This file is managed automatically by <package>
+<package>==2.3.0
 ```
 
 Once installed, updates can be done two ways.
@@ -76,7 +75,7 @@ you can always run the curl command again to update the package (using the `--re
 
 The only caveat at this point is that `.venv/bin/` needs to be in the user's `PATH`,
 or they need to use `./.venv/bin/<package>` directly.
-The install script will help point this out and how it can be done.
+The install script will help point this out and how it can be done (ex. `export PATH="./.venv/bin:$PATH"`).
 
 ## Barrel for package authors
 
@@ -86,7 +85,7 @@ you just need a published package that is your CLI.
 You can copy [install.py](https://github.com/dropseed/barrel/blob/master/barrel/install.py) to your own repo or site,
 but the we always keep an up-to-date hosted version at https://barrel.dev/install.py.
 
-Your documentation should tell users how to use the curl command (include your package name as the argument!).
+Your documentation should tell users how to use the curl command (including your package name as the argument).
 
 ```console
 $ curl -sSL https://barrel.dev/install.py | python3 - <pypi_package_name>
@@ -94,7 +93,7 @@ $ curl -sSL https://barrel.dev/install.py | python3 - <pypi_package_name>
 
 You *should* add "barrel1" (final name TBD) as a dependency in your package and provide a self-updating experience.
 To do this, you just need to call the `update` function with the name of your package.
-You can hook it into your CLI like this (using [click](https://github.com/pallets/click) as an example):
+You can add it to your CLI like this example using [click](https://github.com/pallets/click):
 
 ```python
 import barrel
@@ -116,12 +115,12 @@ $ curl -sSL https://barrel.dev/install.py | python3 - <pypi_package_name> --rein
 Things to know:
 
 - Barrel supports Python 3 only
-- Barrel expects your package to be the only direct dependency the user needs to install (i.e. their `requirements.txt` will only end up with your package in it -- nothing else)
+- Barrel expects your package to be the only direct dependency the user needs to install (i.e. their `requirements.txt` will only end up with your package in it -- [nothing else](#freeze-all-dependency-requirements))
 - Barrel expects your package to have an entrypoint (by default this should be the same as the package name)
 
 ## What Barrel doesn't do
 
-The primary goal of Barrel is to **simplify** the dependency installation/update process for people.
+The primary goal of Barrel is to *simplify* the dependency installation/update process for people.
 So it shouldn't come as a surprise that certain features you know from full-fledged dependency managers are intentionally missing.
 
 ### Freeze *all* dependency requirements
@@ -135,6 +134,9 @@ you should take extra care to specify the ranges of your dependencies that you k
 and put a CI process in place to regularly test a fresh install just like your users would get.
 
 ### Lock to a specific Python version
+
+Barrel won't save the Python version it used during the install,
+and it won't force everyone on the repo to use the same Python version.
 
 Managing multiple Python versions is not for everyone.
 There are tools and ways to do it,
