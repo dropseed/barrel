@@ -138,7 +138,12 @@ class Installer:
         self.preflight(requirements_should_exist=True)
         self.event(f"Updating {self.package_input}")
 
-        self.pip_update()
+        if self.package_name == self.package_input:
+            # Just update to latest
+            self.pip_update()
+        else:
+            # Could be specifying a version
+            self.pip_install()
 
         package_installed = self.get_installed_package()
 
