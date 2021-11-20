@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "barrel1"
+name = "barrel"
 version = "0.1.0"
 description = ""
 authors = ["Dropseed <python@dropseed.dev>"]
