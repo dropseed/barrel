@@ -83,7 +83,7 @@ class Installer:
         mode = self.get_mode(reinstall=reinstall, update=update)
 
         if mode == self.MODE_CREATE:
-            self.install()
+            self.create()
         elif mode == self.MODE_INSTALL:
             self.install()
         elif mode == self.MODE_UPDATE:
