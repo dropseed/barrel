@@ -16,3 +16,35 @@ jobs:
     - run: pip install poetry
     - run: poetry install
     - run: ./scripts/test
+  test-install:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-python@v2
+      with:
+        python-version: "3.9"
+    - name: Prepare
+      run: |
+        mkdir example
+        echo ".venv/bin" >> $GITHUB_PATH
+    # TODO test failure modes?
+    - name: Create
+      working-directory: example
+      run: |
+        cat ../barrel/install.py | python - combine==2.2.1
+        grep "combine==2.2.1" requirements.txt
+    - name: Update
+      working-directory: example
+      run: |
+        cat ../barrel/install.py | python - combine==2.3.0 --update
+        grep "combine==2.3.0" requirements.txt
+    - name: Install
+      working-directory: example
+      run: |
+        rm -r .venv
+        cat ../barrel/install.py | python - combine
+        grep "combine==2.3.0" requirements.txt
+    - name: Reinstall
+      working-directory: example
+      run: |
+        cat ../barrel/install.py | python - combine --reinstall
