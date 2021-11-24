@@ -30,12 +30,12 @@
         }
     </style>
 </head>
-<body class="min-h-screen flex sm:items-center justify-center">
-    <div class="pb-10">
+<body class="min-h-screen flex sm:items-center justify-center px-4">
+    <div class="pb-10 max-w-full">
         <div class="text-center">
             <h1 class="font-extrabold text-4xl mt-8 sm:mt-0">Barrel</h1>
             <h2 class="text-2xl mt-6 leading-normal">Python command line tools that are<br class="hidden sm:inline"> easy to install, repo-isolated, and update themselves.</h2>
-            <div class="bg-gray-900 mt-8 text-white rounded px-4 py-2 shadow">
+            <div class="bg-gray-900 mt-8 text-white rounded px-4 py-2 shadow overflow-auto">
                 {% code "console" %}
                 $ curl -sSL https://barrel.dev/install.py | python3 - <pypi_package_name>
                 {% endcode %}
