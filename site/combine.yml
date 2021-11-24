@@ -1,0 +1,4 @@
+variables:
+  base_url:
+    default: "https://barrel.dev"
+    from_env: URL  # netlify

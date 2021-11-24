@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="https://www.dropseed.dev/favicon.ico">
+    <title>Barrel</title>
+    <meta property="og:title" content="Barrel" />
+    <meta property="og:description" content="Python command line tools that manage their own installation." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="{{ url|absolute_url }}" />
+    <meta property="og:site_name" content="Barrel" />
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Rubik:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        * {
+            font-family: Rubik, sans-serif;
+        }
+        pre {
+            font-family: "JetBrains Mono", monospace;
+        }
+        .highlight .gp {
+            user-select: none;
+            color: #b7b7b7;
+        }
+        .highlight .p {
+            color: #c0c0c0;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex sm:items-center justify-center">
+    <div class="pb-10">
+        <div class="text-center">
+            <h1 class="font-extrabold text-4xl mt-8 sm:mt-0">Barrel</h1>
+            <h2 class="text-2xl mt-6 leading-normal">Python command line tools that are<br class="hidden sm:inline"> easy to install, repo-isolated, and update themselves.</h2>
+            <div class="bg-gray-900 mt-8 text-white rounded px-4 py-2 shadow">
+                {% code "console" %}
+                $ curl -sSL https://barrel.dev/install.py | python3 - <pypi_package_name>
+                {% endcode %}
+            </div>
+            <a class="mt-8 font-medium text-sm hover:underline inline-block" href="https://github.com/dropseed/barrel">Learn more at github.com/dropseed/barrel →</a>
+        </div>
+    </div>
+</body>
+</html>
