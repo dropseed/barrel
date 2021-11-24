@@ -23,7 +23,10 @@ jobs:
     - uses: actions/setup-python@v2
       with:
         python-version: "3.9"
-    - run: mkdir example
+    - name: Prepare
+      run: |
+        mkdir example
+        echo ".venv/bin" >> $GITHUB_PATH
     # TODO test failure modes?
     - name: Create
       working-directory: example
