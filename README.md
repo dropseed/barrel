@@ -1,6 +1,18 @@
 # Barrel
 
-**Build a Python command line tool that manages its own installation.**
+**Python command line tools that are easy to install, repo-isolated, and update themselves.**
+
+Users install your package with:
+
+```console
+$ curl -sSL https://barrel.dev/install.py | python3 - <pypi_package_name>
+```
+
+And update it with:
+
+```console
+$ <cli_name> update
+```
 
 - [Overview](#overview)
 - [What Barrel is](#what-barrel-is)
