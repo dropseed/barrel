@@ -1,5 +1,7 @@
 # Barrel
 
+<img src="https://user-images.githubusercontent.com/649496/144511332-90651fbb-826c-4776-9bce-05586b1a1d02.png" width="100" height="100" align="right" />
+
 **Python command line tools that are easy to install, repo-isolated, and update themselves.**
 
 Users install your package with:
