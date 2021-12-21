@@ -247,10 +247,9 @@ class Installer:
 
     def check_path(self) -> None:
         if not self.entrypoint_available():
-            self.error(
+            self.warn(
                 f'Could not find {self.package_name} in PATH\n\nAn simple solution is to add this to your .bash_profile/.zshrc:\nexport PATH="./.venv/bin:$PATH"'
             )
-            raise Abort()
 
     def check_gitignore(self) -> None:
         if (
