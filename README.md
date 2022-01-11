@@ -105,7 +105,7 @@ Your documentation should tell users how to use the curl command (including your
 $ curl -sSL https://barrel.dev/install.py | python3 - <pypi_package_name>
 ```
 
-You *should* add "barrel1" (final name TBD) as a dependency in your package and provide a self-updating experience.
+You *should* add "barrel" as a dependency in your package and provide a self-updating experience.
 To do this, you just need to call the `update` function with the name of your package.
 You can add it to your CLI like this example using [click](https://github.com/pallets/click):
 
@@ -119,7 +119,7 @@ def update():
     barrel.update("combine")
 ```
 
-If you don't add "barrel1" (final name TBD) as a dependency,
+If you don't add "barrel" as a dependency,
 then you'll need to tell users to run the curl command again to update with the `--reinstall` option.
 
 ```console
