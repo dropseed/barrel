@@ -131,7 +131,7 @@ class Installer:
         self.preflight(requirements_should_exist=False)
         self.event(f"Re-installing {self.package_input} into this directory")
 
-        self.remove_existing()
+        self.remove_existing_venv()
         self.create()
 
     def update(self) -> None:
@@ -199,17 +199,10 @@ class Installer:
         rel = os.path.relpath(which)
         return rel.startswith(self.VENV_NAME)
 
-    def remove_existing(self) -> None:
-        venv_exists = os.path.exists(self.VENV_NAME)
-        requirements_exists = os.path.exists(self.REQUIREMENTS_FILE)
-
-        if venv_exists:
+    def remove_existing_venv(self) -> None:
+        if os.path.exists(self.VENV_NAME):
             self.event(f"  - Removing existing {self.VENV_NAME}")
             shutil.rmtree(self.VENV_NAME)
-
-        if requirements_exists:
-            self.event(f"  - Removing existing {self.REQUIREMENTS_FILE}")
-            os.remove(self.REQUIREMENTS_FILE)
 
     def create_venv(self) -> None:
         self.event(f"- Creating a virtual environment at {self.VENV_NAME}")
