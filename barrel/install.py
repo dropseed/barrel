@@ -132,7 +132,7 @@ class Installer:
         self.event(f"Re-installing {self.package_input} into this directory")
 
         self.remove_existing_venv()
-        self.create()
+        self.install()
 
     def update(self) -> None:
         self.preflight(requirements_should_exist=True)
